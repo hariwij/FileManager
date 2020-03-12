@@ -1,0 +1,213 @@
+﻿@using FileManager;
+@using System.IO;
+@using System.Diagnostics;
+
+<div class="control-section">
+    <div id="FileManager" class="e-control e-filemanager e-lib e-fe-cb-select e-keyboard" style="width: 100%; height: 400px;">
+        <div class="e-spinner-pane e-spin-hide">
+            <div class="e-spinner-inner">
+                <svg class="e-spin-bootstrap4" id="cxzLg" viewBox="0 0 36 36" style="height: 36px; width: 36px; transform-origin: 18px 18px 18px;">
+                    <path class="e-path-circle" d="M18,1.8A16.2,16.2 0 1 1 1.8,18">
+                    </path>
+                </svg>
+            </div>
+        </div>
+        <div id="FileManager_toolbar" class="e-control e-toolbar e-lib e-keyboard e-toolpop" role="toolbar" aria-disabled="false" aria-haspopup="false" aria-orientation="horizontal" tabindex="0" style="height: auto; width: auto;">
+            <div class="e-toolbar-items e-tbar-pos">
+                <div class="e-toolbar-left">
+                    <div class="e-toolbar-item" aria-disabled="false" title="New folder">
+                        <button class="e-tbar-btn e-tbtn-txt e-control e-btn e-lib" @onclick="(()=>FB.GoBack())" type="button" tabindex="-1" aria-label="New folder" style="width: auto;">
+                            <span class="e-btn-icon e-icons e-fe-drop e-icon-left"></span>
+                            <span class="e-tbar-btn-text">Go Back</span>
+                        </button>
+                    </div>
+                    <div class="e-toolbar-item" aria-disabled="false" title="Refresh" style="">
+                        <button class="e-tbar-btn e-tbtn-txt e-control e-btn e-lib" @onclick="(()=>FB.Refresh())" type="button" tabindex="-1" aria-label="Refresh" style="width: auto;">
+                            <span class="e-btn-icon e-icons e-fe-refresh e-icon-left"></span>
+                            <span class="e-tbar-btn-text">Refresh</span>
+                        </button>
+                    </div>
+                    <div class="e-toolbar-item" aria-disabled="false" title="New folder">
+                        <button class="e-tbar-btn e-tbtn-txt e-control e-btn e-lib" type="button" tabindex="-1" aria-label="New folder" style="width: auto;">
+                            <span class="e-btn-icon e-icons e-fe-newfolder e-icon-left"></span>
+                            <span class="e-tbar-btn-text">New folder</span>
+                        </button>
+                    </div>
+                    @*<div class="e-toolbar-item" aria-disabled="false" title="Upload">
+                            <button class="e-tbar-btn e-tbtn-txt e-control e-btn e-lib" type="button" id="FileManager_tb_upload" tabindex="-1" aria-label="Upload" style="width: auto;"><span class="e-btn-icon e-icons e-fe-upload e-icon-left"></span><span class="e-tbar-btn-text">Upload</span></button>
+                        </div>
+                        <div class="e-toolbar-item e-hidden" aria-disabled="false" title="Cut">
+                            <button class="e-tbar-btn e-tbtn-txt e-control e-btn e-lib" type="button" id="FileManager_tb_cut" tabindex="-1" aria-label="Cut" style="width: auto;"><span class="e-btn-icon e-icons e-fe-cut e-icon-left"></span><span class="e-tbar-btn-text">Cut</span></button>
+                        </div>
+                        <div class="e-toolbar-item e-hidden" aria-disabled="false" title="Copy">
+                            <button class="e-tbar-btn e-tbtn-txt e-control e-btn e-lib" type="button" id="FileManager_tb_copy" tabindex="-1" aria-label="Copy" style="width: auto;"><span class="e-btn-icon e-icons e-fe-copy e-icon-left"></span><span class="e-tbar-btn-text">Copy</span></button>
+                        </div>
+                        <div class="e-toolbar-item e-hidden" aria-disabled="false" title="Paste">
+                            <button class="e-tbar-btn e-tbtn-txt e-control e-btn e-lib" type="button" id="FileManager_tb_paste" tabindex="-1" aria-label="Paste" style="width: auto;"><span class="e-btn-icon e-icons e-fe-paste e-icon-left"></span><span class="e-tbar-btn-text">Paste</span></button>
+                        </div>
+                        <div class="e-toolbar-item e-hidden" aria-disabled="false" title="Delete">
+                            <button class="e-tbar-btn e-tbtn-txt e-control e-btn e-lib" type="button" id="FileManager_tb_delete" tabindex="-1" aria-label="Delete" style="width: auto;"><span class="e-btn-icon e-icons e-fe-delete e-icon-left"></span><span class="e-tbar-btn-text">Delete</span></button>
+                        </div>
+                        <div class="e-toolbar-item e-hidden" aria-disabled="false" title="Download">
+                            <button class="e-tbar-btn e-tbtn-txt e-control e-btn e-lib" type="button" id="FileManager_tb_download" tabindex="-1" aria-label="Download" style="width: auto;"><span class="e-btn-icon e-icons e-fe-download e-icon-left"></span><span class="e-tbar-btn-text">Download</span></button>
+                        </div>
+                        <div class="e-toolbar-item e-hidden" aria-disabled="false" title="Rename">
+                            <button class="e-tbar-btn e-tbtn-txt e-control e-btn e-lib" type="button" id="FileManager_tb_rename" tabindex="-1" aria-label="Rename" style="width: auto;"><span class="e-btn-icon e-icons e-fe-rename e-icon-left"></span><span class="e-tbar-btn-text">Rename</span></button>
+                        </div>
+                        <div class="e-toolbar-item e-template" aria-disabled="false" title="Sort by">
+                            <button id="FileManager_tb_sortby" class="e-tbar-btn e-tbtn-txt e-control e-dropdown-btn e-lib e-btn e-fe-popup" tabindex="-1" aria-haspopup="true" aria-expanded="false" aria-owns="FileManager_tb_sortby-popup" type="button"><span class="e-btn-icon e-icons e-fe-sort e-icon-left"></span><span class="e-tbar-btn-text e-tbar-ddb-text">Sort by</span><span class="e-btn-icon e-icons e-icon-right e-caret"></span></button>
+                        </div>*@
+                </div>
+
+                <div class="e-toolbar-center" style="margin-left: 890.5px;"></div>
+                <div class="e-toolbar-right" style="">
+                    <div class="e-toolbar-item e-overflow-show e-hidden" aria-disabled="false" title="Clear selection">
+                        <button class="e-tbar-btn e-tbtn-txt e-control e-btn e-lib" type="button" id="FileManager_tb_selection" tabindex="-1" aria-label="Selection" style="width: auto;"><span class="e-tbar-btn-text">Selection</span><span class="e-btn-icon e-icons e-fe-clear e-icon-right"></span></button>
+                    </div>
+                    <div class="e-toolbar-item e-template e-popup-text e-overflow-show" aria-disabled="false" title="View">
+                        <button id="FileManager_tb_view" class="e-tbar-btn e-tbtn-txt e-control e-dropdown-btn e-lib e-btn e-caret-hide e-fe-popup" tabindex="-1" aria-label="View" aria-haspopup="true" aria-expanded="false" aria-owns="FileManager_tb_view-popup" type="button"><span class="e-btn-icon e-icons e-fe-large e-icon-left"></span><span class="e-tbar-btn-text">View</span><span class="e-btn-icon e-icons e-icon-right e-caret"></span></button>
+                    </div>
+                    <div class="e-toolbar-item e-popup-text e-overflow-show" aria-disabled="false" title="Details">
+                        <button class="e-tbar-btn e-tbtn-txt e-control e-btn e-lib" type="button" id="FileManager_tb_details" tabindex="-1" aria-label="Details" style="width: auto;"><span class="e-btn-icon e-icons e-fe-details e-icon-left"></span><span class="e-tbar-btn-text">Details</span></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="e-layout e-control e-splitter e-lib e-splitter-horizontal" id="FileManager_layout" style="height: 359px; width: 100%;">
+            <div class="e-navigation e-pane e-pane-horizontal e-scrollable e-static-pane e-resizable" id="FileManager_navigation" style="flex-basis: 25%; order: 0;">
+                <div id="FileManager_tree" class="e-control e-treeview e-lib e-fullrow-wrap e-touch e-keyboard" role="tree" tabindex="0" aria-activedescendant="FileManager_tree_active">
+                    <ul class="e-list-parent e-ul " role="tree">
+                        <li class="e-list-item e-level-1" role="treeitem" data-uid="fe_tree" aria-level="1" title="Files" aria-expanded="true">
+                            <ul class="e-list-parent e-ul " role="group">
+                                @foreach (var s in FB.FilesAndDirs.Dirs)
+                                {
+                                    <li class="e-list-item e-level-2" role="treeitem" data-uid="fe_tree_0" aria-level="2" title="@s" @ondblclick="(()=>FB.NavigateTo(s))">
+                                        <div class="e-fullrow"></div>
+                                        <div class="e-text-content">
+                                            <div class="e-list-icon e-fe-folder"></div><span class="e-list-text">@s</span>
+                                        </div>
+                                    </li>
+                                }
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="e-layout-content e-pane e-pane-horizontal e-scrollable e-resizable" id="FileManager_content" style="order: 2;">
+                <div class="e-address e-lib e-keyboard" id="FileManager_breadcrumbbar">
+                    <ul class="e-addressbar-ul">
+                        <li class="e-address-list-item" data-utext="/" tabindex="0"><a class="e-list-text">@FB.CurrentDir</a></li>
+                    </ul>
+                    <div class="e-search-wrap">
+                        <span class="e-icons e-fe-search"></span><span class="e-input-group e-control-wrapper"><input id="FileManager_search" autocomplete="off" aria-label="Search" class="e-control e-textbox e-lib e-input" type="text" role="textbox" name="FileManager_search" placeholder="Search" aria-placeholder="Search" value=""><span class="e-clear-icon e-clear-icon-hide" aria-label="close" role="button"></span></span>
+                    </div>
+                </div>
+
+                <div class="e-large-icons e-lib e-touch e-keyboard" id="FileManager_largeicons" role="group" style="height: 325px; max-height: 100%;" tabindex="0">
+                    <ul class="e-list-parent e-ul " role="listbox">
+                        @foreach (var s in FB.FilesAndDirs.Dirs)
+                        {
+                            <li class="e-list-item e-level-1 e-large-icon" role="option" data-uid="b813" title="@s" @ondblclick="(()=>FB.NavigateTo(s))">
+                                <div class="e-text-content">
+                                    <div class="e-checkbox-wrapper e-css e-small" role="checkbox" aria-checked="false"><span class="e-frame e-icons"></span></div>
+                                    <div class="e-list-icon e-fe-folder"></div><span class="e-list-text">@s</span>
+                                </div>
+                            </li>
+                        }
+                        @foreach (var s in FB.FilesAndDirs.Files)
+                        {
+                            <li class="e-list-item e-level-1 e-large-icon" role="option" data-uid="b813" title="@s" @ondblclick="(()=>FB.NavigateTo(s))">
+                                <div class="e-text-content">
+                                    <div class="e-checkbox-wrapper e-css e-small" role="checkbox" aria-checked="false"><span class="e-frame e-icons"></span></div>
+                                    <div class="e-list-icon e-fe-@SetIcon(s)"></div><span class="e-list-text">@s</span>
+                                </div>
+                            </li>
+                        }
+                    </ul>
+                </div><span class="e-fe-overlay"></span>
+            </div>
+            <div class="e-split-bar e-split-bar-horizontal e-resizable-split-bar e-last-bar" tabindex="0" role="separator" aria-orientation="horizontal" style="width: 1px; order: 1;">
+                <button tabindex="-1" aria-label="Toggle navigation" type="button" class="e-navigate-arrow e-arrow-left e-icon-hidden"></button>
+                <div class="e-resize-handler e-icons" style="width: 1px;"></div>
+                <button tabindex="-1" aria-label="Toggle navigation" type="button" class="e-navigate-arrow e-arrow-right e-icon-hidden"></button>
+            </div>
+        </div>
+
+        <div class="e-dlg-container e-dlg-center-center" style="z-index: 1001;">
+            <div id="FileManager_upload_dialog" class="e-control e-dialog e-lib e-draggable e-dlg-modal e-popup e-popup-close" role="dialog" style="max-height: 380px; z-index: 1001; width: 350px; left: 0px; top: 0px;" aria-labelledby="FileManager_upload_dialog_title" aria-describedby="FileManager_upload_dialog_dialog-content" aria-modal="true">
+                <div class="e-dlg-header-content">
+                    <button class="e-dlg-closeicon-btn e-control e-btn e-lib e-flat e-icon-btn" type="button" title="Close" aria-label="Close"><span class="e-btn-icon e-icon-dlg-close e-icons"></span></button>
+                    <div class="e-dlg-header" id="FileManager_upload_dialog_title">Upload Files</div>
+                </div>
+                <div class="e-dlg-content" id="FileManager_upload_dialog_dialog-content">
+                    <div class="e-upload e-control-wrapper e-lib e-keyboard">
+                        <div class="e-file-select-wrap">
+                            <button class="e-css e-btn" type="button" tabindex="0" title="Browse...">Browse...</button><span class="e-file-select"><input id="FileManager_upload" name="uploadFiles" type="file" class="e-control e-uploader e-lib" aria-label="Uploader" tabindex="-1" multiple="multiple"></span><span class="e-file-drop"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="e-dlg-overlay" style="z-index: 1000; display: none;"></div>
+        </div>
+    </div>
+</div>
+
+
+@code{
+    FileBrowser FB = new FileBrowser();
+    public bool Islst = true;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        FB.FileOnClick += Fb_FileOnClick;
+        FB.OnDirChanged += Fb_OnDirChanged;
+    }
+
+    private void Fb_OnDirChanged(string Path)
+    {
+        StateHasChanged();
+    }
+
+    private void Fb_FileOnClick(string FilePath)
+    {
+        
+    }
+
+    public string SetIcon(string name)
+    {
+        if (FileBrowser.IsDir(name)) return "folder";
+        string ext = Path.GetExtension(name);
+        if (ext.Contains(".mp4", StringComparison.CurrentCultureIgnoreCase)
+            || ext.Contains(".m4p", StringComparison.CurrentCultureIgnoreCase)
+            || ext.Contains(".webm", StringComparison.CurrentCultureIgnoreCase)
+            || ext.Contains(".ogg", StringComparison.CurrentCultureIgnoreCase)
+            || ext.Contains(".MPG", StringComparison.CurrentCultureIgnoreCase)
+            || ext.Contains(".MP2", StringComparison.CurrentCultureIgnoreCase)
+            || ext.Contains(".MPEG", StringComparison.CurrentCultureIgnoreCase)
+            || ext.Contains(".MPE", StringComparison.CurrentCultureIgnoreCase)
+            || ext.Contains(".MPV", StringComparison.CurrentCultureIgnoreCase)
+            || ext.Contains(".M4V", StringComparison.CurrentCultureIgnoreCase)
+            || ext.Contains(".AVI", StringComparison.CurrentCultureIgnoreCase)
+            || ext.Contains(".WMV", StringComparison.CurrentCultureIgnoreCase)
+            || ext.Contains(".MOV", StringComparison.CurrentCultureIgnoreCase)
+            || ext.Contains(".FLV", StringComparison.CurrentCultureIgnoreCase)
+            ) return "video";
+        if (ext.Contains(".WAV", StringComparison.CurrentCultureIgnoreCase)
+            || ext.Contains(".mp3", StringComparison.CurrentCultureIgnoreCase)
+            ) return "audio";
+        if (ext.Contains(".JPG", StringComparison.CurrentCultureIgnoreCase)
+    || ext.Contains(".PNG", StringComparison.CurrentCultureIgnoreCase)
+    || ext.Contains(".GIF", StringComparison.CurrentCultureIgnoreCase)
+    || ext.Contains(".WEBP", StringComparison.CurrentCultureIgnoreCase)
+    || ext.Contains(".TIFF", StringComparison.CurrentCultureIgnoreCase)
+    || ext.Contains(".PSD", StringComparison.CurrentCultureIgnoreCase)
+    || ext.Contains(".RAW", StringComparison.CurrentCultureIgnoreCase)
+    || ext.Contains(".BMP", StringComparison.CurrentCultureIgnoreCase)
+    || ext.Contains(".SVG", StringComparison.CurrentCultureIgnoreCase)
+    ) return "image";
+
+        return "txt";
+    }
+}

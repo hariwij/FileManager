@@ -7,13 +7,15 @@ namespace TestConsole
     {
         static void Main(string[] args)
         {
-            FileBrowser fb = new FileBrowser();
-            fb.FileOnClick += Fb_FileOnClick;
-            fb.CurrentDir = @"E:\Artists\Inna";
-            fb.NavigateTo("Inna_-_Amazing.mp4");
-
-            Console.WriteLine(fb.FilesAndDirs.Path);
+            var result = MakeRelative(@"E:\Artists\Inna\Inna_-_Amazing.mp4", @"C:\");
+            Console.WriteLine(result);
             Console.ReadLine();
+        }
+        public static string MakeRelative(string filePath, string referencePath)
+        {
+            var fileUri = new Uri(filePath);
+            var referenceUri = new Uri(referencePath);
+            return referenceUri.MakeRelativeUri(fileUri).ToString();
         }
 
         private static void Fb_FileOnClick(string FilePath)

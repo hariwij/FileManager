@@ -1,0 +1,15 @@
+﻿@page "fileOpen"
+@using Microsoft.AspNetCore.Http
+@namespace FileManager.Pages
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+
+    var Requset = HttpContext.Request.Query;
+    if (Requset.TryGetValue("File", out var file))
+    {
+
+    }
+
+}
+

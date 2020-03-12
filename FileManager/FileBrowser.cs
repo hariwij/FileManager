@@ -8,40 +8,98 @@ namespace FileManager
 {
     public class FileBrowser
     {
+        public bool ShowHiddenFiles = false;
+        public bool ShowSystemFiles = true;
         public string CurrentDir = @"\";
+
         public Dir FilesAndDirs;
 
         public event FileClicked FileOnClick;
-        public delegate void FileClicked(string FilePath);
+        public delegate void FileClicked(string FileName);
+        public event DirChanged OnDirChanged;
+        public delegate void DirChanged(string Path);
 
         public FileBrowser()
         {
+            CurrentDir = @"\";
             FilesAndDirs = new Dir();
             GetFilesAndDirs();
         }
-        public void GetFilesAndDirs()
+        public FileBrowser(string Dir)
+        {
+            CurrentDir = Dir;
+            FilesAndDirs = new Dir();
+            GetFilesAndDirs();
+        }
+        public void NavigateTo(string path)
+        {
+            string tmpath = Path.Combine(CurrentDir, path);
+            if (IsDir(tmpath))
+            {
+                if (CurrentDir == @"\") CurrentDir = path;
+                else CurrentDir = tmpath;
+                GetFilesAndDirs();
+            }
+            else
+            {
+                FileOnClick?.Invoke(tmpath);
+            }
+        }
+        public void GoBack()
+        {
+            if (IsDir(CurrentDir))
+            {
+                var info = Directory.GetParent(CurrentDir);
+                if (info == null) CurrentDir = @"\";
+                else CurrentDir = info.FullName;
+                GetFilesAndDirs();
+            }
+        }
+        public void Refresh()
+        {
+            GetFilesAndDirs();
+        }
+        public (bool, string) CreateFolder(string FolderName)
+        {
+            var tmpdir = Path.Combine(CurrentDir, FolderName);
+            if (CurrentDir == @"\") return (false, "Can't Create Folder!");
+            if (FilePathHasInvalidChars(tmpdir)) return (false, "Invalied Folder Name!");
+            if (!FilesAndDirs.Dirs.Contains(FolderName))
+            {
+                Directory.CreateDirectory(tmpdir);
+                GetFilesAndDirs();
+                return (true, "Folder Created!");
+            }
+            return (false, "Folder Name Already Exits!");
+        }
+        public (bool, string) CreateFile(string FileName)
+        {
+            var tmpdir = Path.Combine(CurrentDir, FileName);
+            if (CurrentDir == @"\") return (false, "Can't Create File!");
+            if (FilePathHasInvalidChars(tmpdir)) return (false, "Invalied File Name!");
+            if (!FilesAndDirs.Files.Contains(FileName))
+            {
+                var fs = File.Create(tmpdir);
+                fs.Close();
+                GetFilesAndDirs();
+                return (true, "File Created!");
+            }
+            return (false, "File Name Already Exits!");
+        }
+        private void GetFilesAndDirs()
         {
             if (CurrentDir == @"\")
             {
                 DriveInfo[] allDrives = DriveInfo.GetDrives();
                 FilesAndDirs = null;
-                var temp = new Dir { Path = CurrentDir, Dirs = new List<string>() };
+                var temp = new Dir { Path = CurrentDir, Dirs = new List<string>(), Files = new List<string>() };
+                Console.WriteLine("Drives>>>>>------------------------------------------------------------");
                 foreach (var d in allDrives)
                 {
                     temp.Dirs.Add(d.Name);
-                    Console.WriteLine("-----------------------------------------------------------------------");
                     Console.WriteLine("Drive {0}", d.Name);
-                    Console.WriteLine("Drive type: {0}", d.DriveType);
-                    if (d.IsReady == true)
-                    {
-                        Console.WriteLine("  Volume label: {0}", d.VolumeLabel);
-                        Console.WriteLine("  File system: {0}", d.DriveFormat);
-                        Console.WriteLine("  Available space to current user:{0, 15} bytes", d.AvailableFreeSpace);
-                        Console.WriteLine("  Total available space:{0, 15} bytes", d.TotalFreeSpace);
-                        Console.WriteLine("  Total size of drive:{0, 15} bytes ", d.TotalSize);
-                    }
-                    Console.WriteLine("-----------------------------------------------------------------------");
                 }
+                Console.WriteLine("-----------------------------------------------------------------------");
                 FilesAndDirs = temp;
             }
             else
@@ -50,47 +108,28 @@ namespace FileManager
                 Console.WriteLine("Files>>>>>-------------------------------------------------------------");
                 foreach (string f in Directory.GetFiles(CurrentDir))
                 {
-                    temp.Files.Add(Path.GetFileName(f));
+                    bool a = true;
+                    if (!ShowHiddenFiles && File.GetAttributes(f).HasFlag(FileAttributes.Hidden)) a = false;
+                    if (!ShowSystemFiles && File.GetAttributes(f).HasFlag(FileAttributes.System)) a = false;
+                    if (a) temp.Files.Add(Path.GetFileName(f));
                     Console.WriteLine(Path.GetFileName(f));
                 }
                 Console.WriteLine("-----------------------------------------------------------------------");
                 Console.WriteLine("Dirs>>>>>--------------------------------------------------------------");
                 foreach (string d in Directory.GetDirectories(CurrentDir))
                 {
-                    temp.Dirs.Add(Path.GetDirectoryName(d));
-                    Console.WriteLine(Path.GetDirectoryName(d));
+                    bool a = true;
+                    if (!ShowHiddenFiles && File.GetAttributes(d).HasFlag(FileAttributes.Hidden)) a = false;
+                    if (!ShowSystemFiles && File.GetAttributes(d).HasFlag(FileAttributes.System)) a = false;
+                    if (a) temp.Dirs.Add(Path.GetFileName(d));
+                    Console.WriteLine(Path.GetFileName(d));
                 }
                 Console.WriteLine("-----------------------------------------------------------------------");
                 FilesAndDirs = temp;
             }
+            OnDirChanged?.Invoke(CurrentDir);
         }
-
-        public void NavigateTo(string path)
-        {
-            string tmpath = Path.Combine(CurrentDir, path);
-
-            if (IsDir(tmpath))
-            {
-                CurrentDir = tmpath;
-            }
-            else
-            {
-                var handler = FileOnClick;
-                handler?.Invoke(tmpath);
-            }
-            GetFilesAndDirs();
-        }
-        public void GoBack()
-        {
-            if (IsDir(CurrentDir))
-            {
-                var info = Directory.GetParent(CurrentDir);
-                CurrentDir = info.FullName;
-                GetFilesAndDirs();
-            }
-        }
-
-        private bool IsDir(string path)
+        public static bool IsDir(string path)
         {
             try
             {
@@ -101,6 +140,20 @@ namespace FileManager
             {
                 return false;
             }
+            catch (UnauthorizedAccessException)
+            {
+                Console.WriteLine("Error Access Denied!");
+                return true;
+            }
+        }
+        public static bool FilePathHasInvalidChars(string path)
+        {
+            return (!string.IsNullOrEmpty(path) && path.IndexOfAny(Path.GetInvalidPathChars()) >= 0);
+        }
+
+        public static string GetDriveLetter(string path)
+        {
+            return Path.GetPathRoot(path);
         }
     }
 

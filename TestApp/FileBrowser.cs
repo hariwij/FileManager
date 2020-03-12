@@ -79,7 +79,8 @@ namespace FileManager
             if (FilePathHasInvalidChars(tmpdir)) return (false, "Invalied File Name!");
             if (!FilesAndDirs.Files.Contains(FileName))
             {
-                File.Create(FileName);
+                var fs = File.Create(tmpdir);
+                fs.Close();
                 GetFilesAndDirs();
                 return (true, "File Created!");
             }

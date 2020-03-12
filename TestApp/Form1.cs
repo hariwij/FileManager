@@ -60,5 +60,16 @@ namespace TestApp
             var res = fb.CreateFolder(textBox1.Text);
             MessageBox.Show($"{res.Item1}\n{res.Item2}");
         }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            var res = fb.CreateFile(textBox2.Text);
+            MessageBox.Show($"{res.Item1}\n{res.Item2}");
+        }
+
+        private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
