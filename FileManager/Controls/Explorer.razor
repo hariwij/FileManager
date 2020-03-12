@@ -22,7 +22,7 @@
                         </button>
                     </div>
                     <div class="e-toolbar-item" aria-disabled="false" title="Refresh" style="">
-                        <button class="e-tbar-btn e-tbtn-txt e-control e-btn e-lib" @onclick="(()=>FB.Refresh())" type="button" tabindex="-1" aria-label="Refresh" style="width: auto;">
+                        <button class="e-tbar-btn e-tbtn-txt e-control e-btn e-lib" @onclick="(()=>{ FB.Refresh(); SearchTxt = null; })" type="button" tabindex="-1" aria-label="Refresh" style="width: auto;">
                             <span class="e-btn-icon e-icons e-fe-refresh e-icon-left"></span>
                             <span class="e-tbar-btn-text">Refresh</span>
                         </button>
@@ -62,13 +62,23 @@
                 <div class="e-toolbar-center" style="margin-left: 890.5px;"></div>
                 <div class="e-toolbar-right" style="">
                     <div class="e-toolbar-item e-overflow-show e-hidden" aria-disabled="false" title="Clear selection">
-                        <button class="e-tbar-btn e-tbtn-txt e-control e-btn e-lib" type="button" id="FileManager_tb_selection" tabindex="-1" aria-label="Selection" style="width: auto;"><span class="e-tbar-btn-text">Selection</span><span class="e-btn-icon e-icons e-fe-clear e-icon-right"></span></button>
+                        <button class="e-tbar-btn e-tbtn-txt e-control e-btn e-lib" type="button" id="FileManager_tb_selection" tabindex="-1" aria-label="Selection" style="width: auto;">
+                            <span class="e-tbar-btn-text">Selection</span>
+                            <span class="e-btn-icon e-icons e-fe-clear e-icon-right"></span>
+                        </button>
                     </div>
                     <div class="e-toolbar-item e-template e-popup-text e-overflow-show" aria-disabled="false" title="View">
-                        <button id="FileManager_tb_view" class="e-tbar-btn e-tbtn-txt e-control e-dropdown-btn e-lib e-btn e-caret-hide e-fe-popup" tabindex="-1" aria-label="View" aria-haspopup="true" aria-expanded="false" aria-owns="FileManager_tb_view-popup" type="button"><span class="e-btn-icon e-icons e-fe-large e-icon-left"></span><span class="e-tbar-btn-text">View</span><span class="e-btn-icon e-icons e-icon-right e-caret"></span></button>
+                        <button id="FileManager_tb_view" class="e-tbar-btn e-tbtn-txt e-control e-dropdown-btn e-lib e-btn e-caret-hide e-fe-popup" tabindex="-1" aria-label="View" aria-haspopup="true" aria-expanded="false" aria-owns="FileManager_tb_view-popup" type="button">
+                            <span class="e-btn-icon e-icons e-fe-large e-icon-left"></span>
+                            <span class="e-tbar-btn-text">View</span>
+                            <span class="e-btn-icon e-icons e-icon-right e-caret"></span>
+                        </button>
                     </div>
                     <div class="e-toolbar-item e-popup-text e-overflow-show" aria-disabled="false" title="Details">
-                        <button class="e-tbar-btn e-tbtn-txt e-control e-btn e-lib" type="button" id="FileManager_tb_details" tabindex="-1" aria-label="Details" style="width: auto;"><span class="e-btn-icon e-icons e-fe-details e-icon-left"></span><span class="e-tbar-btn-text">Details</span></button>
+                        <button class="e-tbar-btn e-tbtn-txt e-control e-btn e-lib" type="button" id="FileManager_tb_details" tabindex="-1" aria-label="Details" style="width: auto;">
+                            <span class="e-btn-icon e-icons e-fe-details e-icon-left"></span>
+                            <span class="e-tbar-btn-text">Details</span>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -100,7 +110,10 @@
                         <li class="e-address-list-item" data-utext="/" tabindex="0"><a class="e-list-text">@FB.CurrentDir</a></li>
                     </ul>
                     <div class="e-search-wrap">
-                        <span class="e-icons e-fe-search"></span><span class="e-input-group e-control-wrapper"><input id="FileManager_search" autocomplete="off" aria-label="Search" class="e-control e-textbox e-lib e-input" type="text" role="textbox" name="FileManager_search" placeholder="Search" aria-placeholder="Search" value=""><span class="e-clear-icon e-clear-icon-hide" aria-label="close" role="button"></span></span>
+                        <span class="e-icons e-fe-search"></span><span class="e-input-group e-control-wrapper">
+                            <input id="FileManager_search" autocomplete="off" @bind="SearchTxt" @onkeydown="(()=>OnSearchTxtChange())" aria-label="Search" class="e-control e-textbox e-lib e-input" type="text" role="textbox" name="FileManager_search" placeholder="Search" aria-placeholder="Search">
+                            <span class="e-clear-icon e-clear-icon-hide" aria-label="close" role="button"></span>
+                        </span>
                     </div>
                 </div>
 
@@ -158,6 +171,8 @@
     FileBrowser FB = new FileBrowser();
     public bool Islst = true;
 
+    public string SearchTxt { get; set; }
+
     protected override void OnInitialized()
     {
         base.OnInitialized();
@@ -172,7 +187,12 @@
 
     private void Fb_FileOnClick(string FilePath)
     {
-        
+
+    }
+
+    public void OnSearchTxtChange()
+    {
+            FB.Search(SearchTxt);
     }
 
     public string SetIcon(string name)

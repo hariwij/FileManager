@@ -55,6 +55,31 @@ namespace FileManager
                 GetFilesAndDirs();
             }
         }
+
+        public void Search(string txt)
+        {
+            var temp = new Dir { Path = CurrentDir, Files = new List<string>(), Dirs = new List<string>() };
+            try
+            {
+                foreach (string d in Directory.GetDirectories(CurrentDir))
+                {
+                    string Dname = Path.GetFileName(d);
+                    if (Dname.Contains(txt, StringComparison.CurrentCultureIgnoreCase)) temp.Dirs.Add(Dname);
+                }
+                foreach (string f in Directory.GetFiles(CurrentDir))
+                {
+                    string Fname = Path.GetFileName(f);
+                    if (Fname.Contains(txt, StringComparison.CurrentCultureIgnoreCase)) temp.Files.Add(Fname);
+                }
+                FilesAndDirs = temp;
+                OnDirChanged?.Invoke(CurrentDir);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+
         public void Refresh()
         {
             GetFilesAndDirs();
