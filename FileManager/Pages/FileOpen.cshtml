@@ -1,15 +1,58 @@
-﻿@page "fileOpen"
+﻿@page "/fileOpen"
 @using Microsoft.AspNetCore.Http
 @namespace FileManager.Pages
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
 @{
-
+    string fileType = "video";
+    bool fileOk = false;
     var Requset = HttpContext.Request.Query;
-    if (Requset.TryGetValue("File", out var file))
-    {
-
-    }
+    fileOk = Requset.TryGetValue("File", out var file);
 
 }
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>File - </title>
+    <base href="~/" />
+    <link href="/assets/css/bootstrap4.css" rel="stylesheet">
+    <link href="/assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/assets/css/Video.css" rel="stylesheet">
+    <link href="/assets/js/Video.js" rel="stylesheet">
+</head>
+<body>
+    <main class="page lanidng-page">
+        <section style="padding:10px;">
+            <video id="my-video"
+                   class="video-js"
+                   controls
+                   preload="auto"
+                   width="640"
+                   height="264"
+                   data-setup="{}"></video>
+            <br />
+            <input type="file" name="file" id="fileItem" onchange="onChange()">
+            <input type="submit" value="Play">
+            <script type="text/javascript">
+                var URL = window.URL || window.webkitURL;
+                var video = document.getElementsByTagName('video')[0];
+
+                    var files = fileItem.files;
+                    var file = files[0];
+                    var url = URL.createObjectURL(file);
+                    video.src = url;
+                    video.load();
+                    video.onloadeddata = function () {
+                        video.play();
+                    }
+            </script>
+        </section>
+    </main>
+    <script src="_framework/blazor.server.js"></script>
+</body>
+</html>
+
 
