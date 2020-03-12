@@ -39,8 +39,8 @@
             <script type="text/javascript">
                 var URL = window.URL || window.webkitURL;
                 var video = document.getElementsByTagName('video')[0];
-
-                    var files = fileItem.files;
+                function onChange() {
+                var files = fileItem.files;
                     var file = files[0];
                     var url = URL.createObjectURL(file);
                     video.src = url;
@@ -48,6 +48,7 @@
                     video.onloadeddata = function () {
                         video.play();
                     }
+                }
             </script>
         </section>
     </main>
