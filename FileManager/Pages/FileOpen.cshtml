@@ -11,6 +11,7 @@
     var Requset = HttpContext.Request.Query;
     fileOk = Requset.TryGetValue("File", out var file);
     //FileStream fs = new FileStream(file, FileMode.Open);
+    string Fpath = @"'E://Music//4KD//DHARIA - August Diaries (by Monoir) [Official Video].mp4'";
 
 }
 
@@ -36,23 +37,29 @@
             <script type="text/javascript">
                 var URL = window.URL || window.webkitURL;
 
-                //var video = document.getElementsByTagName('video')[0];
+               var video = document.getElementsByTagName('video')[0];
                 function onChange() {
                     var files = fileItem.files;
-                    var file = files[0];
+                    var file1 = files[0];
+                    console.log(file1);
+                    var url1 = URL.createObjectURL(file1);
+                    console.log(url1);
+
+                    var file = new File([''], 'E://Music//4KD//DHARIA - August Diaries (by Monoir) [Official Video].mp4', { type: "video/mp4" });
+                    console.log(file);
                     var url = URL.createObjectURL(file);
                     console.log(url);
                     window.open(url, "_blank");
 
-                    //video.src = url;
-                    //video.load();
-                    //video.onloadeddata = function () {
-                    //    video.play();
-                    //}
+                    video.src = url1;
+                    video.load();
+                    video.onloadeddata = function () {
+                        video.play();
+                    }
                 }
-                //"file:///E:\Music\4KD\DHARIA%20-%20August%20Diaries%20(by%20Monoir)%20[Official%20Video].mp4"
+
                 function OpeN() {
-                    window.open("file:///D:\Blazor%20FileManager%20Overview%20Example%20-%20Syncfusion%20Demos.html");
+
                 }
             </script>
             <input type="button" value="open" onclick="OpeN()">
