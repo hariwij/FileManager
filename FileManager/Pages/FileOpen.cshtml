@@ -1,13 +1,16 @@
 ﻿@page "/fileOpen"
 @using Microsoft.AspNetCore.Http
+@using System.IO;
 @namespace FileManager.Pages
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
 @{
     string fileType = "video";
+
     bool fileOk = false;
     var Requset = HttpContext.Request.Query;
     fileOk = Requset.TryGetValue("File", out var file);
+    //FileStream fs = new FileStream(file, FileMode.Open);
 
 }
 
@@ -26,30 +29,34 @@
 <body>
     <main class="page lanidng-page">
         <section style="padding:10px;">
-            <video id="my-video"
-                   class="video-js"
-                   controls
-                   preload="auto"
-                   width="640"
-                   height="264"
-                   data-setup="{}"></video>
+            <video controls autoplay name="media"></video>
             <br />
             <input type="file" name="file" id="fileItem" onchange="onChange()">
             <input type="submit" value="Play">
             <script type="text/javascript">
                 var URL = window.URL || window.webkitURL;
-                var video = document.getElementsByTagName('video')[0];
+
+                //var video = document.getElementsByTagName('video')[0];
                 function onChange() {
-                var files = fileItem.files;
+                    var files = fileItem.files;
                     var file = files[0];
+                    var ms = new MediaSource();
                     var url = URL.createObjectURL(file);
-                    video.src = url;
-                    video.load();
-                    video.onloadeddata = function () {
-                        video.play();
-                    }
+                    console.log(url);
+                    window.open(url, "_blank");
+
+                    //video.src = url;
+                    //video.load();
+                    //video.onloadeddata = function () {
+                    //    video.play();
+                    //}
+                }
+                //"file:///E:\Music\4KD\DHARIA%20-%20August%20Diaries%20(by%20Monoir)%20[Official%20Video].mp4"
+                function OpeN() {
+                    window.open("file:///D:\Blazor%20FileManager%20Overview%20Example%20-%20Syncfusion%20Demos.html");
                 }
             </script>
+            <input type="button" value="open" onclick="OpeN()">
         </section>
     </main>
     <script src="_framework/blazor.server.js"></script>
