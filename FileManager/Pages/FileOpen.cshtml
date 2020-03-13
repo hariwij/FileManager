@@ -40,7 +40,6 @@
                 function onChange() {
                     var files = fileItem.files;
                     var file = files[0];
-                    var ms = new MediaSource();
                     var url = URL.createObjectURL(file);
                     console.log(url);
                     window.open(url, "_blank");
