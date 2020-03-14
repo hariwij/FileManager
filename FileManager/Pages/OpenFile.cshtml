@@ -1,0 +1,21 @@
+﻿@page "/OpenFile"
+@inject Microsoft.AspNetCore.Components.NavigationManager NavMan
+@using Microsoft.AspNetCore.Http
+@using System.IO;
+@namespace FileManager.Pages
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+
+@{
+
+    string q = Uri.UnescapeDataString(HttpContext.Request.QueryString.Value.TrimStart('?')).Trim('"');
+    Console.WriteLine(q);
+    FileInfo file = new FileInfo(q);
+
+    HttpContext.Response.Clear();
+    HttpContext.Response.Headers.Add("Content-Disposition", "attachment; filename=" + file.Name);
+    HttpContext.Response.Headers.Add("Content-Length", file.Length.ToString());
+    HttpContext.Response.ContentType = "application/octet-stream";
+    await HttpContext.Response.SendFileAsync(new Microsoft.Extensions.FileProviders.Physical.PhysicalFileInfo(file));
+
+}

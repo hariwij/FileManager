@@ -1,0 +1,41 @@
+﻿@page "/OpenStream"
+@inject Microsoft.AspNetCore.Components.NavigationManager NavMan
+@using Microsoft.AspNetCore.Http
+@using System.IO;
+@namespace FileManager.Pages
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+
+@{
+    string q;
+    try
+    {
+        q = Uri.UnescapeDataString(HttpContext.Request.QueryString.Value.TrimStart('?')).Trim('"');
+        Console.WriteLine("Opening " + q);
+
+    }
+    catch (Exception ex)
+    {
+        //TODO: Use more understandable err msgs
+        Console.WriteLine("Path error " + ex.Message);
+        await Response.WriteAsync("Path error " + ex.Message);
+        return;
+    }
+
+    FileStream FS;
+    try
+    {
+        FS = System.IO.File.Open(q, FileMode.Open, FileAccess.Read, FileShare.Read);
+    }
+    catch (Exception ex)
+    {
+        //TODO: Use more understandable err msgs
+        Console.WriteLine("Opening error " + q + " >> " + ex.Message);
+        await Response.WriteAsync("Opening error " + q + " >> " + ex.Message);
+        return;
+    }
+
+    HttpContext.Response.Headers.Clear();
+    await FS.CopyToAsync(HttpContext.Response.BodyWriter.AsStream(true));
+    FS.Dispose();
+}

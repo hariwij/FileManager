@@ -1,0 +1,19 @@
+﻿@page "/PlayVideo"
+@inject Microsoft.AspNetCore.Components.NavigationManager NavMan
+@using Microsoft.AspNetCore.Http
+@using System.IO;
+@namespace FileManager.Pages
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+
+@{
+
+    string q = "OpenStream" + Uri.UnescapeDataString(HttpContext.Request.QueryString.Value);
+}
+
+
+<video width="1024" height="640" controls autoplay>
+    <source src="@q" type="video/mp4">
+    Your browser does not support the video tag.
+</video>
+

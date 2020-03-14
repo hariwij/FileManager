@@ -1,4 +1,6 @@
-﻿@using FileManager;
+﻿@inject NavigationManager NavMan
+@page "/"
+@using FileManager;
 @using System.IO;
 @using System.Diagnostics;
 <div class="control-section">
@@ -167,6 +169,7 @@
 
 
 @code{
+
     FileBrowser FB = new FileBrowser();
     public bool Islst = true;
 
@@ -187,6 +190,16 @@
     private void Fb_FileOnClick(string FilePath)
     {
 
+        string t = SetIcon(FilePath);
+        switch (t)
+        {
+            case "video":
+                NavMan.NavigateTo($"playvideo?\"{FilePath}\"", true);
+                break;
+            default:
+                NavMan.NavigateTo($"OpenStream?\"{FilePath}\"", true);
+                break;
+        }
     }
 
     public void OnSearchTxtChange()

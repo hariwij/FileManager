@@ -28,6 +28,8 @@ namespace FileManager
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
+            services.AddHttpContextAccessor();
+            services.AddRouting();
             services.AddSingleton<WeatherForecastService>();
         }
 
@@ -54,6 +56,7 @@ namespace FileManager
             {
                 endpoints.MapBlazorHub();
                 endpoints.MapFallbackToPage("/_Host");
+                endpoints.MapRazorPages();
             });
         }
     }
