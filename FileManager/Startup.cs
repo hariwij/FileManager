@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using FileManager.Data;
+using BlazorContextMenu;
 
 namespace FileManager
 {
@@ -30,7 +31,28 @@ namespace FileManager
             services.AddServerSideBlazor();
             services.AddHttpContextAccessor();
             services.AddRouting();
-            services.AddSingleton<WeatherForecastService>();
+
+            services.AddBlazorContextMenu(options =>
+            {
+                options.ConfigureTemplate("dark", template =>
+                {
+                    template.MenuCssClass = "dark-menu";
+                    template.MenuItemCssClass = "dark-menu-item";
+                    template.MenuItemDisabledCssClass = "dark-menu-item--disabled";
+                    template.MenuItemWithSubMenuCssClass = "dark-menu-item--with-submenu";
+                    template.Animation = Animation.FadeIn;
+                });
+
+                options.ConfigureTemplate("pink", template =>
+                {
+                    template.MenuCssClass = "pink-menu";
+                    template.MenuItemCssClass = "pink-menu-item";
+                    template.MenuItemDisabledCssClass = "pink-menu-item--disabled";
+                    template.SeperatorHrCssClass = "pink-menu-seperator-hr";
+                    template.MenuItemWithSubMenuCssClass = "pink-menu-item--with-submenu";
+                    template.Animation = Animation.Slide;
+                });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
