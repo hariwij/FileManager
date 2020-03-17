@@ -32,7 +32,7 @@ namespace FileManager
             services.AddHttpContextAccessor();
             services.AddRouting();
             services.AddSignalR();
-
+            services.AddProtectedBrowserStorage();
 
             services.AddBlazorContextMenu(options =>
             {

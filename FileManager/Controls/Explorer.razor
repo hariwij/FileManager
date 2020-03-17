@@ -1,5 +1,7 @@
 ﻿@inject NavigationManager NavMan
 @inject IJSRuntime jsRuntime
+@using Microsoft.AspNetCore.ProtectedBrowserStorage
+@inject ProtectedSessionStorage ProtectedSessionStore
 @using FileManager;
 @using System.IO;
 @using System.Diagnostics;
@@ -439,12 +441,27 @@
     protected override void OnInitialized()
     {
         base.OnInitialized();
+
         FB.FileOnClick += Fb_FileOnClick;
         FB.OnDirChanged += Fb_OnDirChanged;
     }
 
+    protected override async void OnAfterRender(bool firstRender)
+    {
+        if (firstRender)
+        {
+            string crd = await ProtectedSessionStore.GetAsync<string>("Dir");
+            if (crd != null)
+            {
+                FB.NavigateTo(crd);
+            }
+        }
+        base.OnAfterRender(firstRender);
+    }
+
     private void Fb_OnDirChanged(string Path)
     {
+        ProtectedSessionStore.SetAsync("Dir", Path);
         StateHasChanged();
     }
 
