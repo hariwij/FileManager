@@ -1,5 +1,4 @@
 ﻿@inject NavigationManager NavMan
-@page "/"
 @using FileManager;
 @using System.IO;
 @using System.Diagnostics;
@@ -14,7 +13,7 @@
     var TmpD = orderType == OrderType.Acending ? FB.FilesAndDirs.Dirs.OrderBy(s => s) : FB.FilesAndDirs.Dirs.OrderByDescending(s => s);
     var TmpF = orderType == OrderType.Acending ? FB.FilesAndDirs.Files.OrderBy(s => s) : FB.FilesAndDirs.Files.OrderByDescending(s => s);
 
-    string OrderIcon = orderType == OrderType.Acending ? "e-ascending e-icon-ascending" : "e-deascending e-icon-deascending";
+    string OrderIcon = orderType == OrderType.Acending ? "e-ascending e-icon-ascending" : "e-ascending e-icon-deascending";
 }
 <div class="control-section">
     <div id="FileManager" class="e-control e-filemanager e-lib e-fe-cb-select e-keyboard" style="width: 100%; height: @h;">
@@ -105,7 +104,8 @@
         @if (UiType == UIType.Icons)
         {
             <div class="e-layout e-control e-splitter e-lib e-splitter-horizontal" id="FileManager_layout" style="height: @h2; width: 100%;">
-                <div class="e-navigation e-pane e-pane-horizontal e-scrollable e-static-pane e-resizable" id="FileManager_navigation" style="flex-basis: 25%; order: 0;">
+
+                <div class="e-navigation e-pane e-pane-horizontal e-scrollable e-static-pane e-resizable" id="FileManager_navigation" style="flex-basis: 20%; order: 0;">
                     <div id="FileManager_tree" class="e-control e-treeview e-lib e-fullrow-wrap e-touch e-keyboard" role="tree" tabindex="0" aria-activedescendant="FileManager_tree_active">
                         <ul class="e-list-parent e-ul " role="tree">
                             <li class="e-list-item e-level-1" role="treeitem" data-uid="fe_tree" aria-level="1" title="Files" aria-expanded="true">
@@ -174,7 +174,7 @@
         else if (UiType == UIType.Details)
         {
             <div class="e-layout e-control e-splitter e-lib e-splitter-horizontal" id="FileManager_layout" style="height: @h2; width: 100%;">
-                <div class="e-navigation e-pane e-pane-horizontal e-scrollable e-static-pane e-resizable" id="FileManager_navigation" style="flex-basis: 25%; order: 0;">
+                <div class="e-navigation e-pane e-pane-horizontal e-scrollable e-static-pane e-resizable" id="FileManager_navigation" style="flex-basis: 20%; order: 0;">
                     <div id="FileManager_tree" class="e-control e-treeview e-lib e-fullrow-wrap e-touch e-keyboard" role="tree" tabindex="0" aria-activedescendant="FileManager_tree_active">
                         <ul class="e-list-parent e-ul " role="tree">
                             <li class="e-list-item e-level-1 e-active e-node-focus" role="treeitem" data-uid="fe_tree" aria-level="1" title="Files" aria-expanded="true" aria-selected="true" id="FileManager_tree_active">
@@ -400,16 +400,16 @@
         <ContextMenu Id="CommMenu" CssClass="z-10">
             <Item OnClick="@(() => FB.Refresh())">Refresh</Item>
             <Seperator />
-            <Item Enabled="false">Paste</Item>
-            <Item Enabled="false">Cut</Item>
-            <Item Enabled="false">Copy</Item>
-            <Item Enabled="false">Delete</Item>
+            <Item Enabled="!ReadOnly">Paste</Item>
+            <Item Enabled="!ReadOnly">Cut</Item>
+            <Item Enabled="!ReadOnly">Copy</Item>
+            <Item Enabled="!ReadOnly">Delete</Item>
             <Seperator />
             <Item>
                 New
                 <SubMenu>
-                    <Item Enabled="false">Folder</Item>
-                    <Item Enabled="false">File</Item>
+                    <Item Enabled="!ReadOnly">Folder</Item>
+                    <Item Enabled="!ReadOnly">File</Item>
                 </SubMenu>
             </Item>
         </ContextMenu>
@@ -424,6 +424,7 @@
     [Parameter] public OrderType orderType { get; set; } = OrderType.Acending;
     [Parameter] public float Height { get; set; } = 800;
     [Parameter] public bool OpenFilesInNewTab { get; set; } = false;
+    [Parameter] public bool ReadOnly { get; set; } = true;
 
     FileBrowser FB = new FileBrowser();
 
