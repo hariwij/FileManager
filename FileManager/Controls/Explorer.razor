@@ -1,9 +1,15 @@
 ﻿@inject NavigationManager NavMan
+@inject IJSRuntime jsRuntime
 @using FileManager;
 @using System.IO;
 @using System.Diagnostics;
 @using BlazorContextMenu;
 @{
+    //float WWidth = jsRuntime.InvokeAsync<float>("window.innerWidth").Result;
+    float WWidth = 1000;
+
+    string SidePanelSize = WWidth > 768 ? "flex-basis: 20%;" : "flex-basis: 0%;";
+
     string h = $"{Height}px";
     string h1 = $"{Height + (float)90.5}px";
     string h2 = $"{Height - (float)41}px";
@@ -105,7 +111,7 @@
         {
             <div class="e-layout e-control e-splitter e-lib e-splitter-horizontal" id="FileManager_layout" style="height: @h2; width: 100%;">
 
-                <div class="e-navigation e-pane e-pane-horizontal e-scrollable e-static-pane e-resizable" id="FileManager_navigation" style="flex-basis: 20%; order: 0;">
+                <div class="e-navigation e-pane e-pane-horizontal e-scrollable e-static-pane e-resizable" id="FileManager_navigation" style="@SidePanelSize order: 0;">
                     <div id="FileManager_tree" class="e-control e-treeview e-lib e-fullrow-wrap e-touch e-keyboard" role="tree" tabindex="0" aria-activedescendant="FileManager_tree_active">
                         <ul class="e-list-parent e-ul " role="tree">
                             <li class="e-list-item e-level-1" role="treeitem" data-uid="fe_tree" aria-level="1" title="Files" aria-expanded="true">
@@ -174,7 +180,7 @@
         else if (UiType == UIType.Details)
         {
             <div class="e-layout e-control e-splitter e-lib e-splitter-horizontal" id="FileManager_layout" style="height: @h2; width: 100%;">
-                <div class="e-navigation e-pane e-pane-horizontal e-scrollable e-static-pane e-resizable" id="FileManager_navigation" style="flex-basis: 20%; order: 0;">
+                <div class="e-navigation e-pane e-pane-horizontal e-scrollable e-static-pane e-resizable" id="FileManager_navigation" style="@SidePanelSize order: 0;">
                     <div id="FileManager_tree" class="e-control e-treeview e-lib e-fullrow-wrap e-touch e-keyboard" role="tree" tabindex="0" aria-activedescendant="FileManager_tree_active">
                         <ul class="e-list-parent e-ul " role="tree">
                             <li class="e-list-item e-level-1 e-active e-node-focus" role="treeitem" data-uid="fe_tree" aria-level="1" title="Files" aria-expanded="true" aria-selected="true" id="FileManager_tree_active">
