@@ -11,6 +11,9 @@
     int time;
     try
     {
+
+        Console.WriteLine($"Partial Request {Request.Headers["Range"]}");
+
         string q = HttpContext.Request.QueryString.Value.TrimStart('?');
         int splitAt = q.IndexOf(':');
         if (splitAt != -1)
@@ -55,14 +58,18 @@
         await Response.WriteAsync("Opening error " + url + " >> " + ex.Message);
         return;
     }
-
+    long L = FS.Length;
     if (time > 0 && FS.CanSeek)
     {
-        long L = FS.Length;
         long Pos = (long)(L * (time / 100f));
         FS.Seek(Pos, SeekOrigin.Begin);
     }
-    HttpContext.Response.Headers.Clear();
+
+    Response.Headers.Add("Accept-Ranges", "bytes");
+    Response.ContentType = "video/mp4";
+    Response.Headers.Add("Content-Length", L.ToString());
+
+    // HttpContext.Response.Headers.Clear();
     await FS.CopyToAsync(HttpContext.Response.BodyWriter.AsStream(true));
     FS.Dispose();
 }
