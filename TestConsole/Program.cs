@@ -16,10 +16,5 @@ namespace TestConsole
             var referenceUri = new Uri(referencePath);
             return referenceUri.MakeRelativeUri(fileUri).ToString();
         }
-
-        private static void Fb_FileOnClick(string FilePath)
-        {
-            Console.WriteLine($"Clicked >>> {FilePath}");
-        }
     }
 }

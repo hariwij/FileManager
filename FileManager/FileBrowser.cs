@@ -80,10 +80,47 @@ namespace FileManager
             }
         }
 
+        private string sourcePath = @"";
+        private bool IsCut = false;
+
+        public bool Copy(string Name)
+        {
+            if (CurrentDir != @"\")
+            {
+                IsCut = false;
+                sourcePath = Path.Combine(CurrentDir, Name);
+            }
+            return false;
+        }
+
+        public bool Cut(string Name)
+        {
+            if (CurrentDir != @"\")
+            {
+                IsCut = true;
+                sourcePath = Path.Combine(CurrentDir, Name);
+            }
+            return false;
+        }
+
+        public (bool, string) Paste()
+        {
+            if (IsCut)
+            {
+
+            }
+            else
+            {
+
+            }
+            return (false, "Error");
+        }
+
         public void Refresh()
         {
             GetFilesAndDirs();
         }
+
         public (bool, string) CreateFolder(string FolderName)
         {
             var tmpdir = Path.Combine(CurrentDir, FolderName);
