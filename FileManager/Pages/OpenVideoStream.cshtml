@@ -1,4 +1,4 @@
-﻿@page "/OpenStream"
+﻿@page "/OpenVideoStream"
 @inject Microsoft.AspNetCore.Components.NavigationManager NavMan
 @using Microsoft.AspNetCore.Http
 @using System.IO;
@@ -100,11 +100,15 @@
         Pos = 0;
     }
 
-    Console.WriteLine($"Streaming {url} \t at {time}% \t ({Pos} of {L})");
+    Console.WriteLine($"Streaming video {url} \t at {time}% \t ({Pos} of {L})");
 
+    Response.Headers.Add("Accept-Ranges", "bytes");
+    Response.ContentType = "video/mp4";
     Response.Headers.Add("Content-Length", (L - Pos + 4).ToString());
+    Response.Headers.Add("Access-Control-Allow-Origin", "*");
 
     // HttpContext.Response.Headers.Clear();
+    // HttpContext.Response.Body = new MemoryStream();
     await FS.CopyToAsync(HttpContext.Response.BodyWriter.AsStream(true));
     Console.WriteLine($"Done Streaming {url} \t at {time}% \t ({Pos} of {L})");
     FS.Dispose();

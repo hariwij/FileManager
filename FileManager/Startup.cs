@@ -31,6 +31,8 @@ namespace FileManager
             services.AddServerSideBlazor();
             services.AddHttpContextAccessor();
             services.AddRouting();
+            services.AddSignalR();
+
 
             services.AddBlazorContextMenu(options =>
             {
