@@ -1,4 +1,4 @@
-﻿@page "/OpenVideoStream"
+﻿@page "/OpenVideoStream/{PFileName}"
 @inject Microsoft.AspNetCore.Components.NavigationManager NavMan
 @using Microsoft.AspNetCore.Http
 @using System.IO;
@@ -7,6 +7,9 @@
 
 
 @{
+    
+  //  [Parameter] string PFileName ;
+
     Response.Headers.Clear();
     // HttpContext.Response.Clear();
     string url;

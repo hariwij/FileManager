@@ -1,4 +1,4 @@
-﻿@page "/OpenStream"
+﻿@page "/OpenStream/{PFileName}"
 @inject Microsoft.AspNetCore.Components.NavigationManager NavMan
 @using Microsoft.AspNetCore.Http
 @using System.IO;
@@ -7,6 +7,8 @@
 
 
 @{
+
+
     Response.Headers.Clear();
     // HttpContext.Response.Clear();
     string url;

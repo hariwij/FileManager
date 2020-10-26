@@ -19,6 +19,16 @@ namespace FileManager
         public event DirChanged OnDirChanged;
         public delegate void DirChanged(string Path);
 
+
+        public string TxtPath
+        {
+            get => CurrentDir;
+            set
+            {
+                NavigateTo(value);
+            }
+        }
+
         public FileBrowser()
         {
             CurrentDir = @"\";
@@ -42,7 +52,11 @@ namespace FileManager
             }
             else
             {
-                FileOnClick?.Invoke(tmpath);
+                if (File.Exists(tmpath))
+                {
+                    FileOnClick?.Invoke(tmpath);
+                }
+
             }
         }
         public void GoBack()
