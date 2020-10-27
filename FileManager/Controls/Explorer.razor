@@ -11,7 +11,7 @@
 @{
     //float WWidth = jsRuntime.InvokeAsync<float>("window.innerWidth").Result;
     float WWidth = 1000;
-    
+
 
     string SidePanelSize = WWidth > 768 ? "flex-basis: 20%;" : "flex-basis: 0%;";
 
@@ -27,7 +27,7 @@
     string OrderIcon = orderType == OrderType.Acending ? "e-ascending e-icon-ascending" : "e-ascending e-icon-deascending";
 }
 <div class="control-section">
-    <div id="FileManager" class="e-control e-filemanager e-lib e-fe-cb-select e-keyboard" style="width: 100%; height: @h;">
+    <div id="FileManager" class="e-control e-filemanager e-lib e-fe-cb-select e-keyboard" style="height: 100vh; width: 100%; overflow-y: hidden;">
         <div class="e-spinner-pane e-spin-hide">
             <div class="e-spinner-inner">
                 <svg class="e-spin-bootstrap4" id="cxzLg" viewBox="0 0 36 36" style="height: 36px; width: 36px; transform-origin: 18px 18px 18px;">
@@ -57,8 +57,8 @@
                             <span class="e-tbar-btn-text">New folder</span>
                         </button>
                     </div>
-                     
-                   
+
+
                     @*<div class="e-toolbar-item" aria-disabled="false" title="Upload">
                             <button class="e-tbar-btn e-tbtn-txt e-control e-btn e-lib" type="button" id="FileManager_tb_upload" tabindex="-1" aria-label="Upload" style="width: auto;"><span class="e-btn-icon e-icons e-fe-upload e-icon-left"></span><span class="e-tbar-btn-text">Upload</span></button>
                         </div>
@@ -114,9 +114,9 @@
             </div>
         </div>
 
-         <div class="e-layout e-control e-splitter e-lib e-splitter-horizontal" id="FileManager_layout" style="height: @h2; width: 100%;">
+        <div class="e-layout e-control e-splitter e-lib e-splitter-horizontal" id="FileManager_layout" style="height: auto; width: 100%;">
 
-                @* <div class="e-navigation e-pane e-pane-horizontal e-scrollable e-static-pane e-resizable" id="FileManager_navigation" style="@SidePanelSize order: 0;">
+            @* <div class="e-navigation e-pane e-pane-horizontal e-scrollable e-static-pane e-resizable" id="FileManager_navigation" style="@SidePanelSize order: 0;">
                     <div id="FileManager_tree" class="e-control e-treeview e-lib e-fullrow-wrap e-touch e-keyboard" role="tree" tabindex="0" aria-activedescendant="FileManager_tree_active">
                         <ul class="e-list-parent e-ul " role="tree">
                             <li class="e-list-item e-level-1" role="treeitem" data-uid="fe_tree" aria-level="1" title="Files" aria-expanded="true">
@@ -135,27 +135,27 @@
                         </ul>
                     </div>
                 </div> *@
-         <div class="e-layout-content e-pane e-pane-horizontal e-scrollable e-resizable" id="FileManager_content" style="order: 2;">
-                 
+            <div class="e-layout-content e-pane e-pane-horizontal e-scrollable e-resizable" id="FileManager_content" style="order: 2;">
 
-                   <div class="e-address e-lib e-keyboard" id="FileManager_breadcrumbbar" width="50%" >
-                        <div class="e-addressbar-ul" aria-disabled="false" title="URLBar" width="100%" >
-                            <input name="URLBar" type="text" @bind=FB.TxtPath width="100%" />
-                        </div>
-                       
-                        <div class="e-search-wrap">
-                            <span class="e-icons e-fe-search"></span><span class="e-input-group e-control-wrapper">
-                                <input id="FileManager_search" autocomplete="off" @bind="SearchTxt" @onkeydown="(() => OnSearchTxtChange())" aria-label="Search" class="e-control e-textbox e-lib e-input" type="text" role="textbox" name="FileManager_search" placeholder="Search" aria-placeholder="Search">
-                                <span class="e-clear-icon e-clear-icon-hide" aria-label="close" role="button"></span>
-                            </span>
-                        </div>
+
+                <div class="e-address e-lib e-keyboard" id="FileManager_breadcrumbbar" width="50%">
+                    <div class="e-addressbar-ul" aria-disabled="false" title="URLBar" width="100%">
+                        <input name="URLBar" type="text" @bind=FB.TxtPath width="100%" />
                     </div>
 
+                    <div class="e-search-wrap">
+                        <span class="e-icons e-fe-search"></span><span class="e-input-group e-control-wrapper">
+                            <input id="FileManager_search" autocomplete="off" @bind="SearchTxt" @onkeydown="(() => OnSearchTxtChange())" aria-label="Search" class="e-control e-textbox e-lib e-input" type="text" role="textbox" name="FileManager_search" placeholder="Search" aria-placeholder="Search">
+                            <span class="e-clear-icon e-clear-icon-hide" aria-label="close" role="button"></span>
+                        </span>
+                    </div>
+                </div>
 
-        @if (UiType == UIType.Icons)
-        {
-           
-              
+
+                @if (UiType == UIType.Icons)
+                {
+
+
 
                     <div class="e-large-icons e-lib e-touch e-keyboard" id="FileManager_largeicons" role="group" style="height:@h3; max-height: 100%;" tabindex="0">
                         <ContextMenuTrigger MenuId="CommMenu" MouseButtonTrigger="MouseButtonTrigger.Right">
@@ -181,13 +181,13 @@
                             </ul>
                         </ContextMenuTrigger>
                     </div><span class="e-fe-overlay"></span>
-            
-        }
-        else if (UiType == UIType.Details)
-        {
-         
-                 
-                    <div id="FileManager_grid" class="e-control e-grid e-lib e-gridhover e-responsive e-default e-resize-lines e-tooltip e-keyboard" role="grid" tabindex="0" style="width: 100%;">
+
+                }
+                else if (UiType == UIType.Details)
+                {
+
+
+                    <div id="FileManager_grid" class="e-control e-grid e-lib e-gridhover e-responsive e-default e-resize-lines e-tooltip e-keyboard" role="grid" tabindex="0" style=" width: 100%; overflow-y: scroll;">
                         <div class="e-spinner-pane e-spin-hide">
                             <div class="e-spinner-inner">
                                 <svg class="e-spin-bootstrap4" id="3xd6p" viewBox="0 0 36 36" style="height: 36px; width: 36px; transform-origin: 18px 18px 18px;">
@@ -366,15 +366,15 @@
                             </li>
                         </ul>
                     </div><span class="e-fe-overlay"></span>
-               
-          
-        }
-         </div>
-                <div class="e-split-bar e-split-bar-horizontal e-resizable-split-bar e-last-bar" tabindex="0" role="separator" aria-orientation="horizontal" style="width: 1px; order: 1;">
-                    <button tabindex="-1" aria-label="Toggle navigation" type="button" class="e-navigate-arrow e-arrow-left e-icon-hidden"></button>
-                    <div class="e-resize-handler e-icons" style="width: 1px;"></div>
-                    <button tabindex="-1" aria-label="Toggle navigation" type="button" class="e-navigate-arrow e-arrow-right e-icon-hidden"></button>
-                </div>
+
+
+                }
+            </div>
+            <div class="e-split-bar e-split-bar-horizontal e-resizable-split-bar e-last-bar" tabindex="0" role="separator" aria-orientation="horizontal" style="width: 1px; order: 1;">
+                <button tabindex="-1" aria-label="Toggle navigation" type="button" class="e-navigate-arrow e-arrow-left e-icon-hidden"></button>
+                <div class="e-resize-handler e-icons" style="width: 1px;"></div>
+                <button tabindex="-1" aria-label="Toggle navigation" type="button" class="e-navigate-arrow e-arrow-right e-icon-hidden"></button>
+            </div>
         </div>
 
         <ContextMenu Id="ViewMenu" CssClass="z-10">
@@ -446,19 +446,22 @@
 
         string t = SetIcon(FilePath);
         string fileName = System.IO.Path.GetFileName(FilePath);
-        
+
         switch (t)
         {
             case "video":
-                NavMan.NavigateTo($"playvideo/{fileName}?\"{FilePath}\"", true);
+                NavMan.NavigateTo($"playvideo/{fileName}?\"{FilePath}\"");
+                break;
+            case "audio":
+                NavMan.NavigateTo($"playaudio/{fileName}?\"{FilePath}\"");
                 break;
             default:
-                NavMan.NavigateTo($"OpenStream/{fileName}?\"{FilePath}\"", true);
+                NavMan.NavigateTo($"OpenStream/{fileName}?\"{FilePath}\"");
                 break;
         }
     }
 
-   
+
     void SetUiType(UIType type)
     {
         if (UiType != type)
