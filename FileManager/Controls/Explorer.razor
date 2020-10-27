@@ -450,13 +450,13 @@
         switch (t)
         {
             case "video":
-                NavMan.NavigateTo($"playvideo/{fileName}?\"{FilePath}\"");
+                NavMan.NavigateTo($"playvideo/{fileName}?\"{FilePath}\"", true);
                 break;
             case "audio":
-                NavMan.NavigateTo($"playaudio/{fileName}?\"{FilePath}\"");
+                NavMan.NavigateTo($"playaudio/{fileName}?\"{FilePath}\"", true);
                 break;
             default:
-                NavMan.NavigateTo($"OpenStream/{fileName}?\"{FilePath}\"");
+                NavMan.NavigateTo($"OpenStream/{fileName}?\"{FilePath}\"", true);
                 break;
         }
     }
