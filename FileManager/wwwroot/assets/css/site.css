@@ -1,4 +1,17 @@
+body::-webkit-scrollbar {
+    width: rem;
+}
 
+div::-webkit-scrollbar {
+    width: rem;
+}
+body::-webkit-scrollbar-track {
+    background: #6649b8;
+}
+
+body::-webkit-scrollbar-thumb {
+    background: #6649b8;
+}
 
 app {
     position: relative;
