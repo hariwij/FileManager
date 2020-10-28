@@ -49,16 +49,24 @@ namespace FileManager
                 if (CurrentDir == @"\") CurrentDir = path;
                 else CurrentDir = tmpath;
                 GetFilesAndDirs();
+                Console.WriteLine($"cd {tmpath}");
             }
             else
             {
                 if (File.Exists(tmpath))
                 {
                     FileOnClick?.Invoke(tmpath);
+                    Console.WriteLine($"open {tmpath}");
                 }
 
             }
         }
+        public string FullPath(string path)
+        {
+            return Path.Combine(CurrentDir, path);
+        }
+
+
         public void GoBack()
         {
             if (IsDir(CurrentDir))
@@ -67,6 +75,7 @@ namespace FileManager
                 if (info == null) CurrentDir = @"\";
                 else CurrentDir = info.FullName;
                 GetFilesAndDirs();
+                Console.WriteLine($"cd .. {CurrentDir}");
             }
         }
 
@@ -169,38 +178,30 @@ namespace FileManager
                 DriveInfo[] allDrives = DriveInfo.GetDrives();
                 FilesAndDirs = null;
                 var temp = new Dir { Path = CurrentDir, Dirs = new List<string>(), Files = new List<string>() };
-                Console.WriteLine("Drives>>>>>------------------------------------------------------------");
+
                 foreach (var d in allDrives)
                 {
                     temp.Dirs.Add(d.Name);
-                    Console.WriteLine("Drive {0}", d.Name);
                 }
-                Console.WriteLine("-----------------------------------------------------------------------");
                 FilesAndDirs = temp;
             }
             else
             {
                 var temp = new Dir { Path = CurrentDir, Files = new List<string>(), Dirs = new List<string>() };
-                Console.WriteLine("Files>>>>>-------------------------------------------------------------");
                 foreach (string f in Directory.GetFiles(CurrentDir))
                 {
                     bool a = true;
                     if (!ShowHiddenFiles && File.GetAttributes(f).HasFlag(FileAttributes.Hidden)) a = false;
                     if (!ShowSystemFiles && File.GetAttributes(f).HasFlag(FileAttributes.System)) a = false;
                     if (a) temp.Files.Add(Path.GetFileName(f));
-                    Console.WriteLine(Path.GetFileName(f));
                 }
-                Console.WriteLine("-----------------------------------------------------------------------");
-                Console.WriteLine("Dirs>>>>>--------------------------------------------------------------");
                 foreach (string d in Directory.GetDirectories(CurrentDir))
                 {
                     bool a = true;
                     if (!ShowHiddenFiles && File.GetAttributes(d).HasFlag(FileAttributes.Hidden)) a = false;
                     if (!ShowSystemFiles && File.GetAttributes(d).HasFlag(FileAttributes.System)) a = false;
                     if (a) temp.Dirs.Add(Path.GetFileName(d));
-                    Console.WriteLine(Path.GetFileName(d));
                 }
-                Console.WriteLine("-----------------------------------------------------------------------");
                 FilesAndDirs = temp;
             }
             OnDirChanged?.Invoke(CurrentDir);
@@ -218,7 +219,7 @@ namespace FileManager
             }
             catch (UnauthorizedAccessException)
             {
-                Console.WriteLine("Error Access Denied!");
+                Console.WriteLine("Error Access Denied! " + path);
                 return true;
             }
         }
@@ -230,6 +231,25 @@ namespace FileManager
         public static string GetDriveLetter(string path)
         {
             return Path.GetPathRoot(path);
+        }
+
+        public string GetFileDetails(string path)
+        {
+            // string date = File.GetLastAccessTime(path).ToString("HH:mm yyyy/MM/dd");
+            // string size =  
+            FileInfo FI = new FileInfo(path);
+            string date = FI.LastAccessTime.ToString("HH:mm yyyy/MM/dd");
+
+            long L = FI.Length;
+
+            string size = L < 1024 ?
+             (L.ToString() + " B") : L < 1024 * 1024 ?
+             ((L / 1024).ToString() + " kB") : L < 1024L * 1024L * 1024L * 20L ?
+              ((L / 1024L / 1024L).ToString() + " MB") : ((L / 1024L / 1024L / 1024L).ToString() + " GB");
+
+
+            return $"Last Access {date}  Size {size}{(FI.IsReadOnly ? " 🔒" : "")}";
+
         }
     }
 

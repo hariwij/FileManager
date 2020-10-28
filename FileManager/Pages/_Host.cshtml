@@ -19,6 +19,12 @@
     <link href="/blazorContextMenu.css" rel="stylesheet" />
     <script src="/blazorContextMenu.js"></script>
     <script src="_content/Microsoft.AspNetCore.ProtectedBrowserStorage/protectedBrowserStorage.js"></script>
+    <script>
+        window.OpenNew = (args) => {
+            window.open(args);
+        };
+    </script>
+
 </head>
 <body>
     <app>

@@ -84,30 +84,42 @@
     }
     long L = FS.Length;
 
-    if (Pos > 0 && FS.CanSeek)
+    try
     {
-        FS.Seek(Pos, SeekOrigin.Begin);
-        Response.StatusCode = 206;
-        Response.Headers.Add("Content-Range", $" bytes {Pos}-{L - 1}/{L}");
-        time = Pos * 100L / L;
+
+        if (Pos > 0 && FS.CanSeek)
+        {
+            FS.Seek(Pos, SeekOrigin.Begin);
+            Response.StatusCode = 206;
+            Response.Headers.Add("Content-Range", $" bytes {Pos}-{L - 1}/{L}");
+            time = Pos * 100L / L;
+        }
+        else if (time > 0 && FS.CanSeek)
+        {
+            Pos = (long)(L * (time / 100f));
+            FS.Seek(Pos, SeekOrigin.Begin);
+            Response.StatusCode = 206;
+        }
+        else
+        {
+            Pos = 0;
+        }
+
+        Console.WriteLine($"Streaming {url} \t at {time}% \t ({Pos} of {L})");
+
+        Response.Headers.Add("Content-Length", (L - Pos + 4).ToString());
+
+        // HttpContext.Response.Headers.Clear();
+        await FS.CopyToAsync(HttpContext.Response.BodyWriter.AsStream(true));
+        Console.WriteLine($"Done Streaming {url} \t at {time}% \t ({Pos} of {L})");
+        FS.Dispose();
     }
-    else if (time > 0 && FS.CanSeek)
+    catch (Exception ex)
     {
-        Pos = (long)(L * (time / 100f));
-        FS.Seek(Pos, SeekOrigin.Begin);
-        Response.StatusCode = 206;
-    }
-    else
-    {
-        Pos = 0;
+        //TODO: Use more understandable err msgs
+        Console.WriteLine("Opening error last " + url + " >> " + ex.Message);
+        await Response.WriteAsync("Opening error " + url + " >> " + ex.Message);
+        return;
     }
 
-    Console.WriteLine($"Streaming {url} \t at {time}% \t ({Pos} of {L})");
-
-    Response.Headers.Add("Content-Length", (L - Pos + 4).ToString());
-
-    // HttpContext.Response.Headers.Clear();
-    await FS.CopyToAsync(HttpContext.Response.BodyWriter.AsStream(true));
-    Console.WriteLine($"Done Streaming {url} \t at {time}% \t ({Pos} of {L})");
-    FS.Dispose();
 }

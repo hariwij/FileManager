@@ -1,7 +1,7 @@
 ﻿@page "/explorer"
 
 @inject NavigationManager NavMan
-@inject IJSRuntime jsRuntime
+@inject IJSRuntime JSRuntime
 @using Microsoft.AspNetCore.ProtectedBrowserStorage
 @inject ProtectedSessionStorage ProtectedSessionStore
 @using FileManager;
@@ -57,6 +57,7 @@
                             <span class="e-tbar-btn-text">New folder</span>
                         </button>
                     </div>
+                  
                      
                    
                     @*<div class="e-toolbar-item" aria-disabled="false" title="Upload">
@@ -86,7 +87,7 @@
                 </div>
 
                 <div class="e-toolbar-center" style="margin-left: @h1;"></div>
-                <div class="e-toolbar-right" style="">
+                <div class="e-toolbar-right" style="">                    
                     <div class="e-toolbar-item e-overflow-show e-hidden" aria-disabled="false" title="Clear selection">
                         <button class="e-tbar-btn e-tbtn-txt e-control e-btn e-lib" type="button" id="FileManager_tb_selection" tabindex="-1" aria-label="Selection" style="width: auto;">
                             <span class="e-tbar-btn-text">Selection</span>
@@ -113,6 +114,8 @@
                 </div>
             </div>
         </div>
+        
+       
 
          <div class="e-layout e-control e-splitter e-lib e-splitter-horizontal" id="FileManager_layout" style="height: @h2; width: 100%;">
 
@@ -135,6 +138,11 @@
                         </ul>
                     </div>
                 </div> *@
+
+       
+         
+        
+
          <div class="e-layout-content e-pane e-pane-horizontal e-scrollable e-resizable" id="FileManager_content" style="order: 2;">
                  
 
@@ -188,69 +196,7 @@
          
                  
                     <div id="FileManager_grid" class="e-control e-grid e-lib e-gridhover e-responsive e-default e-resize-lines e-tooltip e-keyboard" role="grid" tabindex="0" style="width: 100%;">
-                        <div class="e-spinner-pane e-spin-hide">
-                            <div class="e-spinner-inner">
-                                <svg class="e-spin-bootstrap4" id="3xd6p" viewBox="0 0 36 36" style="height: 36px; width: 36px; transform-origin: 18px 18px 18px;">
-                                    <path class="e-path-circle" d="M18,1.8A16.2,16.2 0 1 1 1.8,18"></path>
-                                </svg>
-                            </div>
-                        </div>
-                        <div class="e-gridheader e-lib e-droppable" style="">
-                            <div class="e-headercontent" style="border-right-width: 0px;">
-                                <table class="e-table e-sortfilter" cellspacing="0.25px" role="grid" aria-colcount="5">
-                                    <colgroup id="FileManager_gridcolGroup">
-                                        <col style="width: 26px;">
-                                        <col style="width: 46px;">
-                                        <col style="width: auto">
-                                        <col style="width: 190px;">
-                                        <col style="width: 110px;">
-                                    </colgroup>
-                                    <thead>
-                                        <tr class="e-columnheader">
-                                            <th class="e-headercell e-fe-checkbox e-defaultcursor" role="columnheader" tabindex="-1" aria-colindex="0" aria-rowspan="1" aria-colspan="1">
-                                                <div e-mappinguid="grid-column0" class="e-headercelldiv e-headerchkcelldiv">
-                                                    <div class="e-checkbox-wrapper e-css e-small">
-                                                        <input class="e-checkselectall" type="checkbox"><span class="e-frame e-icons e-uncheck"></span><span class="e-label"> </span>
-                                                    </div>
-                                                </div>
-                                                <div class="e-sortfilterdiv e-icons"></div>
-                                                <div class="e-rsuppress" style="height: 32px;"></div>
-                                            </th>
-                                            <th class="e-headercell e-templatecell e-fe-grid-icon e-mousepointer" role="columnheader" tabindex="-1" aria-colindex="0" aria-sort="none" aria-grabbed="false" aria-rowspan="1" aria-colspan="1">
-                                                <div e-mappinguid="grid-column1" class="e-headercelldiv"><span class="e-fe-icon e-fe-folder"></span></div>
-                                                <div class="e-sortfilterdiv e-icons"></div>
-                                                <div class="e-rsuppress" style="height: 32px;"></div>
-                                            </th>
-                                            <th class="e-headercell e-fe-grid-name e-mousepointer" @onclick="(()=>Sort())" role="columnheader" tabindex="-1" aria-colindex="0" aria-sort="none" aria-grabbed="false" aria-rowspan="1" aria-colspan="1">
-                                                <div e-mappinguid="grid-column2" class="e-headercelldiv"><span class="e-headertext">Name</span></div>
-                                                <div class="e-sortfilterdiv e-icons @OrderIcon"></div>
-                                                <div class="e-rhandler e-rcursor" style="height: 32px;"></div>
-                                            </th>
-                                            <th class="e-headercell e-mousepointer" role="columnheader" tabindex="-1" aria-colindex="0" aria-sort="none" aria-grabbed="false" aria-rowspan="1" aria-colspan="1">
-                                                <div e-mappinguid="grid-column3" class="e-headercelldiv"><span class="e-headertext">Modified</span></div>
-                                                <div class="e-sortfilterdiv e-icons"></div>
-                                                <div class="e-rhandler e-rcursor" style="height: 32px;"></div>
-                                            </th>
-                                            <th class="e-headercell e-lastcell e-mousepointer" role="columnheader" tabindex="-1" aria-colindex="0" aria-sort="none" aria-grabbed="false" aria-rowspan="1" aria-colspan="1">
-                                                <div e-mappinguid="grid-column4" class="e-headercelldiv"><span class="e-headertext">Size</span></div>
-                                                <div class="e-sortfilterdiv e-icons"></div>
-                                                <div class="e-rhandler e-rcursor" style="height: 32px;"></div>
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="e-hide">
-                                        <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                    </tbody>
-                                    <caption class="e-hide">FileManager_grid_header_table</caption>
-                                </table>
-                            </div>
-                        </div>
+                        
                         <div class="e-gridcontent e-lib e-droppable e-touch">
                             <div class="e-content e-scrollShow" aria-busy="false" style="height: @h4;">
                                 <table class="e-table" cellspacing="0.25px" role="grid" id="FileManager_grid_content_table" aria-multiselectable="true" aria-colcount="5">
@@ -289,9 +235,9 @@
                                                 <tr role="row" class="e-row" aria-rowindex="0" data-uid="grid-row10" @ondblclick="(() => FB.NavigateTo(s))">
                                                     @*<ContextMenuTrigger MenuId="Mid" MouseButtonTrigger="MouseButtonTrigger.Right">*@
                                                     <td class="e-rowcell e-gridchkbox e-fe-checkbox" role="gridcell" tabindex="-1" aria-label="checkbox" aria-colindex="0" index="0">
-                                                        <div class="e-checkbox-wrapper e-css e-small">
-                                                            <input class="e-checkselect" type="checkbox"><span class="e-frame e-icons"></span><span class="e-label"> </span>
-                                                        </div>
+                                                        
+                                                            <input class="" type="checkbox" />
+                                                        
                                                     </td>
                                                     <td class="e-rowcell e-templatecell e-fe-grid-icon" role="gridcell" tabindex="-1" aria-label=" is template cell column header type" aria-colindex="1" index="0"><span class="e-fe-icon e-fe-folder"></span></td>
                                                     <td class="e-rowcell e-templatecell e-fe-grid-name" role="gridcell" tabindex="-1" aria-label="Documents is template cell column header Name" aria-colindex="2" index="0" title="@s"><span class="e-fe-text">@s</span></td>
@@ -305,17 +251,20 @@
                                             @foreach (var s in TmpF)
                                             {
 
-                                                <tr role="row" class="e-row" aria-rowindex="0" data-uid="grid-row10" @ondblclick="(() => FB.NavigateTo(s))">
+                                                <tr role="row" class="e-row" aria-rowindex="0" data-uid="grid-row10"
+                                                 @ondblclick="(() => FB.NavigateTo(s))" @onclick="(() => FileSelected(s))">
                                                     @*<ContextMenuTrigger MenuId="triggerMenu" MouseButtonTrigger="MouseButtonTrigger.Right">*@
                                                     <td class="e-rowcell e-gridchkbox e-fe-checkbox" role="gridcell" tabindex="-1" aria-label="checkbox" aria-colindex="0" index="0">
                                                         <div class="e-checkbox-wrapper e-css e-small">
-                                                            <input class="e-checkselect" type="checkbox"><span class="e-frame e-icons"></span><span class="e-label"> </span>
+                                                            <input class="" type="checkbox" />
                                                         </div>
                                                     </td>
-                                                    <td class="e-rowcell e-templatecell e-fe-grid-icon" role="gridcell" tabindex="-1" aria-label=" is template cell column header type" aria-colindex="1" index="0"><span class="e-fe-icon e-fe-@SetIcon(s)"></span></td>
-                                                    <td class="e-rowcell e-templatecell e-fe-grid-name" role="gridcell" tabindex="-1" aria-label="Documents is template cell column header Name" aria-colindex="2" index="0" title="@s"><span class="e-fe-text">@s</span></td>
-                                                    <td class="e-rowcell" role="gridcell" tabindex="-1" aria-label="column header Modified" aria-colindex="3" index="0"></td>
-                                                    <td class="e-rowcell e-templatecell" role="gridcell" tabindex="-1" aria-label="0 is template cell column header Size" aria-colindex="4" index="0"><span class="e-fe-size"></span></td>
+                                                    <td class="e-rowcell e-templatecell e-fe-grid-icon" role="gridcell" tabindex="-1" aria-colindex="1" index="0"><span class="e-fe-icon e-fe-@SetIcon(s)"></span></td>
+                                                    <td class="e-rowcell e-templatecell e-fe-grid-name" role="gridcell" tabindex="-1" aria-colindex="2" index="0" title="@s"><span class="e-fe-text">@s</span></td>
+                                                    <td class="e-rowcell" role="gridcell" tabindex="-1" aria-label="column header Modified" aria-colindex="3" index="0">
+                                                        <span class="e-btn-icon e-icons e-fe-download e-icon-left" @onclick="(() => FB_DownloadFile(s))"></span>
+                                                    </td>   
+                                                                    
                                                     @*</ContextMenuTrigger>*@
                                                 </tr>
 
@@ -369,6 +318,20 @@
                
           
         }
+
+         @if(ShowDetails){
+        <div id="FileManager_toolbar" class="e-control e-toolbar e-lib e-keyboard e-toolpop" role="toolbar" aria-disabled="false" aria-haspopup="false" aria-orientation="horizontal" tabindex="0" style="height: auto; width: auto;" 
+         @onclick="(() => {ShowDetails = false;})" >
+            <div class="e-toolbar-items e-tbar-pos">
+               <div class="e-toolbar-right" style="">
+                    <div class="e-toolbar-item" >                        
+                         <span class="e-tbar-btn-text">@TxtDetails</span>                        
+                    </div>
+                </div>
+             </div>
+         </div>
+        }
+        
          </div>
                 <div class="e-split-bar e-split-bar-horizontal e-resizable-split-bar e-last-bar" tabindex="0" role="separator" aria-orientation="horizontal" style="width: 1px; order: 1;">
                     <button tabindex="-1" aria-label="Toggle navigation" type="button" class="e-navigate-arrow e-arrow-left e-icon-hidden"></button>
@@ -376,6 +339,8 @@
                     <button tabindex="-1" aria-label="Toggle navigation" type="button" class="e-navigate-arrow e-arrow-right e-icon-hidden"></button>
                 </div>
         </div>
+
+      
 
         <ContextMenu Id="ViewMenu" CssClass="z-10">
             <Item OnClick="@(()=>SetUiType(UIType.Details))">Details</Item>
@@ -414,6 +379,10 @@
 
     public string SearchTxt { get; set; }
 
+    public bool ShowDetails {get; set; }
+    public string TxtDetails {get; set; }
+    public string SelectedPath {get; set; }
+
     protected override void OnInitialized()
     {
         base.OnInitialized();
@@ -450,14 +419,34 @@
         switch (t)
         {
             case "video":
-                NavMan.NavigateTo($"playvideo/{fileName}?\"{FilePath}\"", true);
+                OpenInNewTab($"playvideo/{fileName}?\"{FilePath}\"");
                 break;
             default:
-                NavMan.NavigateTo($"OpenStream/{fileName}?\"{FilePath}\"", true);
+                OpenInNewTab($"OpenStream/{fileName}?\"{FilePath}\"");
                 break;
         }
     }
+    private void FB_DownloadFile(string FileName)
+    {
+        if(FB == null) return;
+        string FilePath = FB.FullPath(FileName);  
+        // NavMan.NavigateTo($"OpenFile/{FileName}?\"{FilePath}\"", false);
+        OpenInNewTab($"OpenFile/{FileName}?\"{FilePath}\"");
 
+    }
+
+    public async void OpenInNewTab(string Path)
+    {
+        await JSRuntime.InvokeVoidAsync("OpenNew", Path);
+    }
+
+    public void FileSelected(string FileName)
+    {
+        SelectedPath = FB.FullPath(FileName); 
+        TxtDetails = FB.GetFileDetails(SelectedPath);
+        ShowDetails = true;
+    }
+   
    
     void SetUiType(UIType type)
     {
