@@ -27,7 +27,7 @@
     string OrderIcon = orderType == OrderType.Acending ? "e-ascending e-icon-ascending" : "e-ascending e-icon-deascending";
 }
 <div class="control-section">
-    <div id="FileManager" class="e-control e-filemanager e-lib e-fe-cb-select e-keyboard" style="height: 100vh; width: 100%; overflow-y: hidden;">
+    <div id="FileManager" class="e-control e-filemanager e-lib e-fe-cb-select e-keyboard" style="height: 100%; width: 100%; overflow-y: hidden;">
         <div class="e-spinner-pane e-spin-hide">
             <div class="e-spinner-inner">
                 <svg class="e-spin-bootstrap4" id="cxzLg" viewBox="0 0 36 36" style="height: 36px; width: 36px; transform-origin: 18px 18px 18px;">
@@ -318,8 +318,18 @@
                
           
         }
+        
+         </div>
+                <div class="e-split-bar e-split-bar-horizontal e-resizable-split-bar e-last-bar" tabindex="0" role="separator" aria-orientation="horizontal" style="width: 1px; order: 1;">
+                    <button tabindex="-1" aria-label="Toggle navigation" type="button" class="e-navigate-arrow e-arrow-left e-icon-hidden"></button>
+                    <div class="e-resize-handler e-icons" style="width: 1px;"></div>
+                    <button tabindex="-1" aria-label="Toggle navigation" type="button" class="e-navigate-arrow e-arrow-right e-icon-hidden"></button>
+                </div>
+        </div>
 
-         @if(ShowDetails){
+
+         @if(ShowDetails)
+         {
         <div id="FileManager_toolbar" class="e-control e-toolbar e-lib e-keyboard e-toolpop" role="toolbar" aria-disabled="false" aria-haspopup="false" aria-orientation="horizontal" tabindex="0" style="height: auto; width: auto;" 
          @onclick="(() => {ShowDetails = false;})" >
             <div class="e-toolbar-items e-tbar-pos">
@@ -331,14 +341,6 @@
              </div>
          </div>
         }
-        
-         </div>
-                <div class="e-split-bar e-split-bar-horizontal e-resizable-split-bar e-last-bar" tabindex="0" role="separator" aria-orientation="horizontal" style="width: 1px; order: 1;">
-                    <button tabindex="-1" aria-label="Toggle navigation" type="button" class="e-navigate-arrow e-arrow-left e-icon-hidden"></button>
-                    <div class="e-resize-handler e-icons" style="width: 1px;"></div>
-                    <button tabindex="-1" aria-label="Toggle navigation" type="button" class="e-navigate-arrow e-arrow-right e-icon-hidden"></button>
-                </div>
-        </div>
 
       
 
